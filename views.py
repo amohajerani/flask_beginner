@@ -5,6 +5,7 @@ views = Blueprint(__name__, 'views')
 
 @views.route('/')
 def home():
+    print('Running the request')
     return render_template('index.html', name='king')
 
 
