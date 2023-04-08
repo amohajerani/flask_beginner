@@ -13,11 +13,7 @@ On AWS:
 - sudo apt update
 - sudo apt-get install docker.io
 - sudo apt install docker-compose
+-
 - sudo docker-compose up -d
   or if you want load balancing:
 - sudo docker-compose up -d --build --scale app=3
-
-notes:
-
-701 instance has docker but not SSL.
-3a2 has SSL but not docker
