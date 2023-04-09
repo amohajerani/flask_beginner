@@ -4,6 +4,7 @@ https://dev.to/shadid12/how-to-deploy-your-node-js-app-on-aws-with-nginx-and-ssl
 
 Running flask with NGINX on docker:
 https://www.youtube.com/watch?v=cjFjDXkfs6M&ab_channel=SriwWorldofCoding
+https://www.youtube.com/watch?v=7isa-1VC6pY&ab_channel=AntonPutra
 
 On AWS:
 
