@@ -8,7 +8,6 @@ services:
 
   nginx:
     build: ./nginx
-    depends_on:
-      - app
+    restart: always
     ports:
       - "80:80"
