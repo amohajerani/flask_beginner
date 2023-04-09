@@ -1,4 +1,4 @@
 FROM nginx
-COPY nginx.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY ssl_ke.pem certs/thegagali.pem
 COPY ssl_privat_ke.pem certs/thegagali-key.pem
