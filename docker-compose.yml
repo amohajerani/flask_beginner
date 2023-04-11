@@ -4,6 +4,9 @@ services:
     build: ./app
     ports: 
       - "8000"
+      - "27017"
+      - "27016"
+      - "27015"
 
   nginx:
     build: ./nginx
