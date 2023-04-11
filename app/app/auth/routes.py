@@ -28,7 +28,8 @@ def login():
         user = User().get_by_username(username=login_form.username.data)
         if user is not None and User.check_password(hashed_password=user["password"], password=login_form.password.data):
             print("Password validated.")
-            print(f"ID: '{user['_id']}' - Username: '{user['name']}' logging in.")
+            print(
+                f"ID: '{user['_id']}' - Username: '{user['name']}' logging in.")
             user_obj = User(username=user["name"])
             login_user(user_obj)
             next_page = request.args.get('next')
@@ -36,7 +37,8 @@ def login():
                 next_page = url_for('main.index')
             return redirect(next_page)
         else:
-            print(f"User '{login_form.username.data}' entered invalid credentials.")
+            print(
+                f"User '{login_form.username.data}' entered invalid credentials.")
             flash("Invalid username or password")
 
     return render_template('login.html', title='Sign In', login_form=login_form)
@@ -57,12 +59,14 @@ def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        user = User(username=form.username.data,
+                    email=form.email.data, password=form.password.data)
         # Hashing the password here
         user.set_password(password=form.password.data)
         # Saving into database
         user.register()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('auth.login'))
+        login_user(user, remember=True)
+        return redirect(url_for('main.index'))
 
     return render_template('register.html', title='Register', form=form)
