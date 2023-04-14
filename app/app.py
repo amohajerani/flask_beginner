@@ -1,4 +1,5 @@
-"""Python Flask WebApp Auth0 integration example
+"""
+Python Flask WebApp Auth0 integration example
 """
 
 import json
