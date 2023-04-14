@@ -9,9 +9,13 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, url_for
 
-ENV_FILE = find_dotenv()
+ENV_FILE = None  # find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
+AUTH0_CLIENT_ID = 'vR1p93JREHkZOIad7G3EYNFK05EvxKl9'
+AUTH0_CLIENT_SECRET = 'MhpKH8LrTjIwHyQQjXpTeoMWXQo4OPNjlcbMgSPIUvOQvkPuI6m9GepDMnz2Hoz_'
+AUTH0_DOMAIN = 'dev-rd37vlggjrd6siyn.us.auth0.com'
+APP_SECRET_KEY = 'ALongRandomlyGeneratedString'
 
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
