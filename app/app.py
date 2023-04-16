@@ -43,10 +43,11 @@ def home():
 
 @app.route("/private")
 def private():
-    return render_template(
-        "private.html",
-        session=session.get("user")
-    )
+    session = session.get("user")
+    if session:
+        return render_template(
+            "private.html")
+    return redirect('/login')
 
 
 @app.route("/callback", methods=["GET", "POST"])
