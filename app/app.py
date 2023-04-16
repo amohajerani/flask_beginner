@@ -31,7 +31,17 @@ oauth.register(
 )
 
 
+def require_auth(func):
+    def wrapper(*args, **kwargs):
+        if session.get('user'):
+            func(*args, **kwargs)
+        else:
+            return redirect('/login')
+
+    return wrapper
 # Controllers API
+
+
 @app.route("/")
 def home():
     return render_template(
@@ -41,12 +51,17 @@ def home():
     )
 
 
-@app.route("/private")
+@app.route("/public")
 def private():
-    if session.get("user"):
-        return render_template(
-            "private.html")
-    return redirect('/login')
+    return render_template(
+        "public.html")
+
+
+@app.route("/private")
+@require_auth
+def private():
+    return render_template(
+        "private.html")
 
 
 @app.route("/callback", methods=["GET", "POST"])
