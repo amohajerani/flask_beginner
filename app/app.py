@@ -41,6 +41,14 @@ def home():
     )
 
 
+@app.route("/private")
+def private():
+    return render_template(
+        "private.html",
+        session=session.get("user")
+    )
+
+
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
