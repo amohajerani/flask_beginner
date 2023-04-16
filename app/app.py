@@ -43,8 +43,7 @@ def home():
 
 @app.route("/private")
 def private():
-    session = session.get("user")
-    if session:
+    if session.get("user"):
         return render_template(
             "private.html")
     return redirect('/login')
