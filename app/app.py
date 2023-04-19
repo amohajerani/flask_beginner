@@ -5,10 +5,12 @@ Python Flask WebApp Auth0 integration example
 import json
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
-
+import os
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, redirect, render_template, session, url_for, request
+from s3_functions import upload_file, list_files
+from werkzeug.utils import secure_filename
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -16,6 +18,10 @@ if ENV_FILE:
 
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
+
+
+UPLOAD_FOLDER = "uploads"
+BUCKET = "thegagali"
 
 
 oauth = OAuth(app)
@@ -93,6 +99,28 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+
+@app.route("/form")
+def formfunc():
+    return render_template('form.html')
+
+
+@app.route("/upload", methods=['POST'])
+def upload():
+    if request.method == "POST":
+        f = request.files['file']
+        f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
+        upload_file(f.filename, BUCKET)
+        os.remove(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
+
+        return redirect("/")
+
+
+@app.route("/files")
+def list():
+    contents = list_files(BUCKET)
+    return render_template('collection.html', contents=contents)
 
 
 if __name__ == "__main__":
