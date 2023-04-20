@@ -1,6 +1,7 @@
 import boto3
 from dotenv import find_dotenv, load_dotenv
 import os
+import mimetypes
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -12,7 +13,7 @@ def upload_file(file_name, bucket):
                              aws_access_key_id=os.environ.get('S3_KEY'),
                              aws_secret_access_key=os.environ.get('S3_SECRET'))
     response = s3_client.upload_file(
-        f"uploads/{file_name}", bucket, file_name, ExtraArgs={'ContentType': 'image/jpeg'})
+        f"uploads/{file_name}", bucket, file_name, ExtraArgs={'ContentType': mimetypes.MimeTypes().guess_type('my_file.txt')[0]})
     return response
 
 
