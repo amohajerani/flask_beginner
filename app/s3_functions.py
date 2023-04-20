@@ -11,7 +11,8 @@ def upload_file(file_name, bucket):
     s3_client = boto3.client('s3',
                              aws_access_key_id=os.environ.get('S3_KEY'),
                              aws_secret_access_key=os.environ.get('S3_SECRET'))
-    response = s3_client.upload_file(f"uploads/{file_name}", bucket, file_name)
+    response = s3_client.upload_file(
+        f"uploads/{file_name}", bucket, file_name, ExtraArgs={'ContentType': 'image/jpeg'})
     return response
 
 
