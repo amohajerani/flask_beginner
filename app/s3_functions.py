@@ -13,7 +13,7 @@ def upload_file(file_name, bucket):
                              aws_access_key_id=os.environ.get('S3_KEY'),
                              aws_secret_access_key=os.environ.get('S3_SECRET'))
     response = s3_client.upload_file(
-        f"uploads/{file_name}", bucket, file_name, ExtraArgs={'ContentType': mimetypes.MimeTypes().guess_type('my_file.txt')[0]})
+        f"uploads/{file_name}", bucket, file_name, ExtraArgs={'ContentType': mimetypes.MimeTypes().guess_type(file_name)[0]})
     return response
 
 
