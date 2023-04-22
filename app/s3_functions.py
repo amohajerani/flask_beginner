@@ -35,7 +35,7 @@ def list_files(bucket, user_id):
     folder = url_friendly(user_id)+'/'
     try:
         for item in s3_client.list_objects(Bucket=bucket, Prefix=folder)['Contents']:
-            url = "https://"+bucket+".s3.amazonaws.com/"+folder+item['Key']
+            url = "https://"+bucket+".s3.amazonaws.com/"+item['Key']
             filename = item['Key'].split('/')[-1]
             public_urls.append([url, filename])
     except Exception as e:
