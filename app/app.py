@@ -43,7 +43,7 @@ def require_auth(func):
             func(*args, **kwargs)
         else:
             return redirect('/login')
-
+    wrapper.__name__ = func.__name__
     return wrapper
 # Controllers API
 
@@ -58,7 +58,7 @@ def home():
 
 
 @app.route("/public")
-def private():
+def public():
     return render_template(
         "public.html")
 
@@ -85,6 +85,7 @@ def login():
 
 
 @app.route("/logout")
+@require_auth
 def logout():
     session.clear()
     return redirect(
@@ -102,7 +103,10 @@ def logout():
 
 
 @app.route("/form")
+@require_auth
 def formfunc():
+    session = session.get('user')
+    print(session)
     return render_template('form.html')
 
 
