@@ -109,11 +109,13 @@ def formfunc():
 
 
 @app.route("/upload", methods=['POST'])
+@require_auth
 def upload():
     if request.method == "POST":
         f = request.files['file']
         f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
-        upload_file(f.filename, BUCKET)
+        user_id = session['user'].userinfo.sub
+        upload_file(f.filename, BUCKET, user_id)
         os.remove(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
 
         return redirect("/")
