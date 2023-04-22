@@ -43,7 +43,7 @@ def require_auth(func):
             func(*args, **kwargs)
         else:
             return redirect('/login')
-    wrapper.__name__ = func.__name__
+    # wrapper.__name__ = func.__name__
     return wrapper
 # Controllers API
 
