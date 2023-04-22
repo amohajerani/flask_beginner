@@ -40,10 +40,13 @@ oauth.register(
 def require_auth(func):
     def wrapper(*args, **kwargs):
         if session.get('user'):
+            print('you are logged in')
             func(*args, **kwargs)
         else:
+            print(' you are not logged in')
             return redirect('/login')
     wrapper.__name__ = func.__name__
+    print('you are about to run the wrapper')
     return wrapper
 # Controllers API
 
