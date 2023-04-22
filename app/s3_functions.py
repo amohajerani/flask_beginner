@@ -13,9 +13,12 @@ def upload_file(file_name, bucket, user_id):
     s3_client = boto3.client('s3',
                              aws_access_key_id=os.environ.get('S3_KEY'),
                              aws_secret_access_key=os.environ.get('S3_SECRET'))
-    file_path = user_id+'/'+file_name
+    file_path = url = urllib.parse.quote_plus(user_id+'/'+file_name)
     response = s3_client.upload_file(
-        f"uploads/{file_name}", bucket, file_path, ExtraArgs={'ContentType': mimetypes.MimeTypes().guess_type(file_name)[0]})
+        f"uploads/{file_name}",
+        bucket,
+        file_path,
+        ExtraArgs={'ContentType': mimetypes.MimeTypes().guess_type(file_name)[0]})
     return response
 
 
