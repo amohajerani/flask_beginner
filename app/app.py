@@ -43,7 +43,6 @@ def require_auth(func):
             func(*args, **kwargs)
         else:
             return redirect('/login')
-    # wrapper.__name__ = func.__name__
     return wrapper
 # Controllers API
 
@@ -102,7 +101,6 @@ def logout():
 
 
 @app.route("/form")
-# @require_auth
 def formfunc():
     return render_template('form.html')
 
