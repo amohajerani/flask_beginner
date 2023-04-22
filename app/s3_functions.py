@@ -2,7 +2,6 @@ import boto3
 from dotenv import find_dotenv, load_dotenv
 import os
 import mimetypes
-import urllib
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -10,7 +9,8 @@ if ENV_FILE:
 
 
 def url_friendly(word):
-    return urllib.parse.quote_plus(word)
+    word = word.replace('|', '_')
+    return word
 
 
 def upload_file(file_name, bucket, user_id):
