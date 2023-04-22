@@ -40,7 +40,7 @@ oauth.register(
 def require_auth(func):
     def wrapper(*args, **kwargs):
         if session.get('user'):
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         else:
             return redirect('/login')
     return wrapper
