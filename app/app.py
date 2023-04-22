@@ -84,6 +84,7 @@ def login():
 
 
 @app.route("/logout")
+@require_auth
 def logout():
     session.clear()
     return redirect(
@@ -101,6 +102,7 @@ def logout():
 
 
 @app.route("/form")
+@require_auth
 def formfunc():
     return render_template('form.html')
 
@@ -117,6 +119,7 @@ def upload():
 
 
 @app.route("/files")
+@require_auth
 def list():
     contents = list_files(BUCKET)
     return render_template('collection.html', contents=contents)
