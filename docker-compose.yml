@@ -3,7 +3,7 @@ services:
   app: 
     build: ./app
     volumes:
-      - ./:./app
+      - ./app:./app
     ports: 
       - "8000"
       - "27017"
