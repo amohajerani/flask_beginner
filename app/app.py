@@ -65,7 +65,7 @@ def public():
         "public.html")
 
 
-@app.route("/private", endpoint='private')
+@app.route("/private")
 @require_auth
 def private():
     return render_template(
@@ -103,7 +103,7 @@ def logout():
     )
 
 
-@app.route("/form", endpoint='form')
+@app.route("/form")
 @require_auth
 def formfunc():
     return render_template('form.html')
