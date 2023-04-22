@@ -105,8 +105,8 @@ def logout():
 @app.route("/form")
 @require_auth
 def formfunc():
-    s = session.get('user')
-    print(s)
+    # s = session.get('user')
+    print('hello workd')
     return render_template('form.html')
 
 
