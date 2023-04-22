@@ -124,7 +124,8 @@ def upload():
 @app.route("/files")
 @require_auth
 def list():
-    contents = list_files(BUCKET)
+    user_id = session['user']['userinfo']['sub']
+    contents = list_files(BUCKET, user_id)
     return render_template('collection.html', contents=contents)
 
 
