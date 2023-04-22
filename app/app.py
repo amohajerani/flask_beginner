@@ -85,7 +85,6 @@ def login():
 
 
 @app.route("/logout")
-@require_auth
 def logout():
     session.clear()
     return redirect(
@@ -105,8 +104,6 @@ def logout():
 @app.route("/form")
 @require_auth
 def formfunc():
-    # s = session.get('user')
-    print('hello workd')
     return render_template('form.html')
 
 
