@@ -45,7 +45,6 @@ def require_auth(func):
         else:
             print(' you are not logged in')
             return redirect('/login')
-    wrapper.__name__ = func.__name__
     print('you are about to run the wrapper')
     return wrapper
 # Controllers API
@@ -66,7 +65,7 @@ def public():
         "public.html")
 
 
-@app.route("/private")
+@app.route("/private", endpoint='private')
 @require_auth
 def private():
     return render_template(
@@ -104,7 +103,7 @@ def logout():
     )
 
 
-@app.route("/form")
+@app.route("/form", endpoint='form')
 @require_auth
 def formfunc():
     return render_template('form.html')
