@@ -40,12 +40,10 @@ oauth.register(
 def require_auth(func):
     def wrapper(*args, **kwargs):
         if session.get('user'):
-            print('you are logged in')
             func(*args, **kwargs)
         else:
-            print(' you are not logged in')
             return redirect('/login')
-    print('you are about to run the wrapper')
+    wrapper.__name__ = func.__name__
     return wrapper
 # Controllers API
 
@@ -104,7 +102,7 @@ def logout():
 
 
 @app.route("/form")
-@require_auth
+# @require_auth
 def formfunc():
     return render_template('form.html')
 
