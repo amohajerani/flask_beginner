@@ -18,7 +18,19 @@ Files collection
 
 
 '''
-email = 'amir'
+from pymongo.mongo_client import MongoClient
+from dotenv import find_dotenv, load_dotenv
+from os import environ as env
+
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+MONGO_URL = env.get("MONGO_URI")
+client = MongoClient(MONGO_URL)
+db = client.thegagali
+Users = db.Users
+Files = db.files
 
 
 def create_username(email):
