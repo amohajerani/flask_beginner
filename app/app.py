@@ -8,8 +8,9 @@ from urllib.parse import quote_plus, urlencode
 import os
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, url_for, request
-from s3_functions import upload_file, list_files
+from flask import Flask, redirect, render_template, session, request
+from s3_functions import upload_file, get_files
+from mongo import get_username, insert_file_doc, file_exists
 from werkzeug.utils import secure_filename
 
 ENV_FILE = find_dotenv()
@@ -113,19 +114,29 @@ def formfunc():
 def upload():
     if request.method == "POST":
         f = request.files['file']
-        f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
-        user_id = session['user']['userinfo']['sub']
-        upload_file(f.filename, BUCKET, user_id)
-        os.remove(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
+        private = len(request.form.getlist('private'))
+        filename = secure_filename(f.filename)
+        username = get_username(session['user']['userinfo']['email'])
+
+        # check if a file with this name exists
+        if file_exists(username, filename):
+            return "file name exists. Pick a different name"
+        # otherwise create a file doc
+        insert_file_doc(username, filename, private)
+        # Upload the file
+        f.save(os.path.join(UPLOAD_FOLDER, filename))
+        upload_file(os.path.join(UPLOAD_FOLDER, filename),
+                    BUCKET, username, filename)
+        os.remove(os.path.join(UPLOAD_FOLDER, filename))
 
         return redirect("/")
 
 
 @app.route("/files")
 @require_auth
-def list():
-    user_id = session['user']['userinfo']['sub']
-    contents = list_files(BUCKET, user_id)
+def list_files():
+    username = get_username(session['user']['userinfo']['email'])
+    contents = get_files(BUCKET, username)
     return render_template('collection.html', contents=contents)
 
 
