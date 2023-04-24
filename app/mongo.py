@@ -47,7 +47,7 @@ def get_username(email):
     user_obj = Users.find_one({'email': email})
     if not user_obj:
         username = create_username(email)
-        Users.insert({'email': email, 'username': username})
+        Users.insert_one({'email': email, 'username': username})
     else:
         username = user_obj['username']
     return username
