@@ -66,3 +66,7 @@ def insert_file_doc(username, filename, private):
     filepath = username+'/'+filename
     Files.insert_one(
         {'filepath': filepath, 'private': private, 'username': username})
+
+
+def get_file_doc(filepath):
+    return Files.find_one({'filepath': filepath})

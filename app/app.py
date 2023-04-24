@@ -10,7 +10,7 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, request, Response
 from s3_functions import upload_file, get_file_names, get_file_obj
-from mongo import get_username, insert_file_doc, file_exists
+from mongo import get_username, insert_file_doc, file_exists, get_file_doc
 from werkzeug.utils import secure_filename
 
 ENV_FILE = find_dotenv()
@@ -143,6 +143,14 @@ def list_files():
 @app.route("/<username>/<filename>")
 def get_file(username, filename):
     filepath = username+'/'+filename
+
+    # get the private attribute of the object
+    file_doc = get_file_doc(filepath)
+
+    if file_doc['private']:
+        if not session.get('user') or session['user']['username'] != username:
+            return "Private file"
+
     file_obj = get_file_obj(filepath, BUCKET)
 
     return Response(
