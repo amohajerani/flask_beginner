@@ -26,7 +26,7 @@ def upload_file(file_location, bucket, username, filename):
     return response
 
 
-def get_files(bucket, username):
+def get_file_names(bucket, username):
     s3_client = boto3.client('s3',
                              aws_access_key_id=os.environ.get('S3_KEY'),
                              aws_secret_access_key=os.environ.get('S3_SECRET'))
@@ -40,3 +40,10 @@ def get_files(bucket, username):
     except Exception as e:
         pass
     return files
+
+
+def get_file_obj(filepath, bucket):
+    s3_client = boto3.client('s3',
+                             aws_access_key_id=os.environ.get('S3_KEY'),
+                             aws_secret_access_key=os.environ.get('S3_SECRET'))
+    return s3_client.get_object(Bucket=bucket, Key=filepath, ResponseContentType='image/jpeg')

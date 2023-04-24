@@ -8,8 +8,8 @@ from urllib.parse import quote_plus, urlencode
 import os
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, request
-from s3_functions import upload_file, get_files
+from flask import Flask, redirect, render_template, session, request, Response
+from s3_functions import upload_file, get_file_names, get_file_obj
 from mongo import get_username, insert_file_doc, file_exists
 from werkzeug.utils import secure_filename
 
@@ -136,8 +136,18 @@ def upload():
 @require_auth
 def list_files():
     username = get_username(session['user']['userinfo']['email'])
-    contents = get_files(BUCKET, username)
+    contents = get_file_names(BUCKET, username)
     return render_template('collection.html', contents=contents)
+
+
+@app.route("/<username>/<filename>")
+def get_file(username, filename):
+    filepath = username+'/'+filename
+    file_obj = get_file_obj(filepath, BUCKET)
+
+    return Response(
+        file_obj['Body'].read(), content_type=file_obj['ResponseMetadata']['HTTPHeaders']['content-type']
+    )
 
 
 if __name__ == "__main__":
