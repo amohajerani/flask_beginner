@@ -148,7 +148,10 @@ def get_file(username, filename):
     file_doc = get_file_doc(filepath)
 
     if file_doc['private']:
-        if not session.get('user') or session['user']['username'] != username:
+        if not session.get('user'):
+            return "Private file"
+        session_username = get_username(session['user']['email'])
+        if username != session_username:
             return "Private file"
 
     file_obj = get_file_obj(filepath, BUCKET)
