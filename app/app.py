@@ -150,7 +150,7 @@ def get_file(username, filename):
     if file_doc['private']:
         if not session.get('user'):
             return "Private file"
-        session_username = get_username(session['user']['email'])
+        session_username = get_username(session['user']['userinfo']['email'])
         if username != session_username:
             return "Private file"
 
