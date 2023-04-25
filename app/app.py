@@ -2,6 +2,7 @@
 Python Flask WebApp Auth0 integration example
 """
 
+import pdb
 import json
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
@@ -80,6 +81,7 @@ def callback():
 
 @app.route("/login")
 def login():
+    print("thissssss: ", url_for("callback", _external=True))
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
@@ -171,6 +173,8 @@ def delete_file(username, filename):
     s3_delete_file(filepath, BUCKET)
     return redirect('/files')
 
+
+pdb.set_trace()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 8000))
