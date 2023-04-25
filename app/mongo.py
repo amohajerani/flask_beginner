@@ -70,3 +70,7 @@ def insert_file_doc(username, filename, private):
 
 def get_file_doc(filepath):
     return Files.find_one({'filepath': filepath})
+
+
+def mongo_delete_doc(filepath):
+    Files.delete_one({'filepath': filepath})

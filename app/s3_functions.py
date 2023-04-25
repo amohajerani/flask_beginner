@@ -47,3 +47,10 @@ def get_file_obj(filepath, bucket):
                              aws_access_key_id=os.environ.get('S3_KEY'),
                              aws_secret_access_key=os.environ.get('S3_SECRET'))
     return s3_client.get_object(Bucket=bucket, Key=filepath, ResponseContentType=mimetypes.MimeTypes().guess_type(filepath)[0])
+
+
+def s3_delete_file(filepath, bucket):
+    s3_client = boto3.client('s3',
+                             aws_access_key_id=os.environ.get('S3_KEY'),
+                             aws_secret_access_key=os.environ.get('S3_SECRET'))
+    s3_client.delete_object(Bucket=bucket, Key=filepath)

@@ -9,8 +9,8 @@ import os
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, request, Response
-from s3_functions import upload_file, get_file_names, get_file_obj
-from mongo import get_username, insert_file_doc, file_exists, get_file_doc
+from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
+from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc
 from werkzeug.utils import secure_filename
 
 ENV_FILE = find_dotenv()
@@ -159,6 +159,16 @@ def get_file(username, filename):
     return Response(
         file_obj['Body'].read(), content_type=file_obj['ResponseMetadata']['HTTPHeaders']['content-type']
     )
+
+
+@app.route("/<username>/<filename>")
+@require_auth
+def delete_file(username, filename):
+    filepath = username+'/'+filename
+    # delete file doc from mongo db
+    mongo_delete_doc(filepath)
+    # delete from s3
+    s3_delete_file(filepath, BUCKET)
 
 
 if __name__ == "__main__":
