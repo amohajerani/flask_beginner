@@ -137,7 +137,7 @@ def upload():
 def list_files():
     username = get_username(session['user']['userinfo']['email'])
     contents = get_file_names(BUCKET, username)
-    return render_template('collection.html', contents=contents)
+    return render_template('collection.html', contents=contents, username=username)
 
 
 @app.route("/<username>/<filename>")

@@ -9,8 +9,10 @@
           <h3>Here are media files inside the S3 bucket:</h3>
           
           <ul>
-            {% for item in contents %}
-              <li> {{item}}
+            {% for filename in contents %}
+              <li> 
+                {{filename}}
+                <a href="/{{username}}/{{filename}}">View</a>
               </li>
             {% endfor %}
           </ul>
