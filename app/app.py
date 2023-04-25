@@ -161,7 +161,7 @@ def get_file(username, filename):
     )
 
 
-@app.route("/<username>/<filename>")
+@app.route("/delete/<username>/<filename>")
 @require_auth
 def delete_file(username, filename):
     filepath = username+'/'+filename
