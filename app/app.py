@@ -169,6 +169,7 @@ def delete_file(username, filename):
     mongo_delete_doc(filepath)
     # delete from s3
     s3_delete_file(filepath, BUCKET)
+    return redirect('/files')
 
 
 if __name__ == "__main__":
