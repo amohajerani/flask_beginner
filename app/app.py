@@ -10,7 +10,7 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, request, Response
 from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
-from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_doc
+from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc
 from werkzeug.utils import secure_filename
 
 ENV_FILE = find_dotenv()
