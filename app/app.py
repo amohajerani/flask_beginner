@@ -10,7 +10,7 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, request, Response
 from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
-from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc
+from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file
 from werkzeug.utils import secure_filename
 
 ENV_FILE = find_dotenv()
@@ -170,6 +170,25 @@ def delete_file(username, filename):
     # delete from s3
     s3_delete_file(filepath, BUCKET)
     return redirect('/files')
+
+
+@app.route("/update-page/<username>/<filename>")
+# @require_auth
+def update_page(username, filename):
+    filepath = username+'/'+filename
+    file_doc = get_file_doc(filepath)
+    private = file_doc['private']
+    return render_template('update-page.html', filename=filename, username=username, private=private)
+
+
+@app.route("/update-func/<username>/<filename>", methods=['POST'])
+# @require_auth
+def update_func(username, filename):
+    if request.method == "POST":
+        private = len(request.form.getlist('private'))
+        filepath = username+'/'+filename
+        mongo_update_file(filepath, {'private': private})
+        return redirect('/files')
 
 
 if __name__ == "__main__":

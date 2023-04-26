@@ -74,3 +74,10 @@ def get_file_doc(filepath):
 
 def mongo_delete_doc(filepath):
     Files.delete_one({'filepath': filepath})
+
+
+def mongo_update_file(filepath, update_obj):
+    filter = {'filepath': filepath}
+    file_obj = Files.find_one(filter)
+    newvalues = {"$set": update_obj}
+    Files.update_one(filter, newvalues)
