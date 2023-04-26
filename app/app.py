@@ -81,7 +81,7 @@ def callback():
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
-        redirect_uri='www.thegagali.com/callback'
+        redirect_uri='https://www.thegagali.com/callback'
     )
 
 
