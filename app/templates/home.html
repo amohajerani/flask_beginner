@@ -19,12 +19,12 @@
             <tr>
               <td>{{ filename }}</td>
               <td>{% if private==1 %}
-                Private {% else %} public {% endif %}
-              </tr>
-              <tr><a href="/{{username}}/{{filename}}">View</a></tr>
-              <tr><a href="/delete/{{username}}/{{filename}}">Delete</a></tr>
-              <tr><a href="/{{username}}/{{filename}}" download={{filename}}>Download</a></tr>
-              <tr><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Link</button></tr>
+                Private {% else %} public {% endif %}</td>
+              <td><a href="/{{username}}/{{filename}}">View</a></td>
+              <td><a href="/delete/{{username}}/{{filename}}">Delete</a></td>
+              <td><a href="/{{username}}/{{filename}}" download={{filename}}>Download</a></td>
+              <td><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Link</button></td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
