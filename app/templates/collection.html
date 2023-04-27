@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Display images</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="content">
@@ -15,6 +16,8 @@
                 <a href="/{{username}}/{{filename}}">View</a>
                 <a href="/delete/{{username}}/{{filename}}">Delete</a>
                 <a href="/update-page/{{username}}/{{filename}}">Update</a>
+                <a href="/{{username}}/{{filename}}" download={{filename}}>Download</a>
+                <span class="selectable">Copy the link</span>
               </li>
             {% endfor %}
           </ul>

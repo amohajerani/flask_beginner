@@ -1,0 +1,4 @@
+.selectable {
+    user-select: all;
+    -webkit-user-select: all;
+  }
