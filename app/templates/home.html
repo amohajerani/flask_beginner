@@ -5,10 +5,10 @@
       <h3>Here are media files inside the S3 bucket:</h3>
       
       <ul>
-        {% for doc_obj in doc_objects %}
+        {% for filename,private in doc_objects.items() %}
           <li> 
             {{filename}}
-            {% if doc_obj==1 %}
+            {% if private==1 %}
               <p>Private</p>
             {% else %}
               <p>public</p>
