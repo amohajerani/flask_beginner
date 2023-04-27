@@ -54,7 +54,10 @@ def require_auth(func):
 def home():
     username = get_username(session['user']['userinfo']['email'])
     contents = get_file_names(BUCKET, username)
-    return render_template('home.html', contents=contents, username=username)
+    doc_objects = {}
+    for content in contents:
+        doc_objects[content]: get_file_doc(content)['private']
+    return render_template('home.html', doc_objects=doc_objects, username=username)
 
 
 @app.route("/base")

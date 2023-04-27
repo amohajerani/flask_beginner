@@ -5,12 +5,17 @@
       <h3>Here are media files inside the S3 bucket:</h3>
       
       <ul>
-        {% for filename in contents %}
+        {% for doc_obj in doc_objects %}
           <li> 
             {{filename}}
+            {% if doc_obj==1 %}
+              <p>Private</p>
+            {% else %}
+              <p>public</p>
+            {% endif %}
             <a href="/{{username}}/{{filename}}">View</a>
             <a href="/delete/{{username}}/{{filename}}">Delete</a>
-            <a href="/update-page/{{username}}/{{filename}}">Update</a>
+            <a href="/update-page/{{username}}/{{filename}}">Update privacy</a>
             <a href="/{{username}}/{{filename}}" download={{filename}}>Download</a>
             <button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Copy Link</button>
 
