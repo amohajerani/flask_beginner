@@ -8,8 +8,10 @@
           <tr>
             <th>filename</th>
             <th>privacy</th>
-            <th></th>
-            <th></th>
+            <th>View</th>
+            <th>Delete</th>
+            <th>Download</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +24,7 @@
               <tr><a href="/{{username}}/{{filename}}">View</a></tr>
               <tr><a href="/delete/{{username}}/{{filename}}">Delete</a></tr>
               <tr><a href="/{{username}}/{{filename}}" download={{filename}}>Download</a></tr>
-              <tr><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Copy Link</button></tr>
+              <tr><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Link</button></tr>
           {% endfor %}
         </tbody>
       </table>
