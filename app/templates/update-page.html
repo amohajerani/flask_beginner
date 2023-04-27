@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  </head>
-  <body>
+{% extends "base.html" %} {% block title %}Form{% endblock %} {% block content
+    %}
     <div class="content">
-      <h1>Update {{filename}}</h1>
-      <div>
-        <form method="POST" action="/update-func/{{username}}/{{filename}}" enctype="multipart/form-data">
-            {% if private %}
-            <input type="checkbox" value="private" name="private" checked>
-            {% else %}
-            <input type="checkbox" value="private" name="private">
-            {% endif %}
-            <label for="private"> private</label><br>
-          <input type="submit" value="Update">
-        </form>
+        <h1>Update {{filename}}</h1>
+        <div>
+          <form method="POST" action="/update-func/{{username}}/{{filename}}" enctype="multipart/form-data">
+              {% if private %}
+              <input type="checkbox" value="private" name="private" checked>
+              {% else %}
+              <input type="checkbox" value="private" name="private">
+              {% endif %}
+              <label for="private"> private</label><br>
+            <input type="submit" value="Update">
+          </form>
+        </div>
       </div>
-    </div>
-  </body>
-</html>
+    {% endblock %}
