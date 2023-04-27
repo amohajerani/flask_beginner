@@ -56,7 +56,8 @@ def home():
     contents = get_file_names(BUCKET, username)
     doc_objects = {}
     for content in contents:
-        doc_objects[content]: get_file_doc(username+'/'+content)['private']
+        doc_objects[content] = get_file_doc(username+'/'+content)['private']
+    print('doc object: ', doc_objects)
     return render_template('home.html', doc_objects=doc_objects, username=username)
 
 
