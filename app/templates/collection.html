@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Display images</title>
-    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="content">
@@ -17,11 +16,23 @@
                 <a href="/delete/{{username}}/{{filename}}">Delete</a>
                 <a href="/update-page/{{username}}/{{filename}}">Update</a>
                 <a href="/{{username}}/{{filename}}" download={{filename}}>Download</a>
-                <span class="selectable">Copy the link</span>
+                <button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Copy Link</button>
+
               </li>
             {% endfor %}
           </ul>
         </div>
     </div>
+    <script>
+      function copyToClipboard(link) {
+        const el = document.createElement('textarea');
+        el.value = link;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert('Link copied to clipboard!');
+      }
+      </script>
   </body>
 </html>
