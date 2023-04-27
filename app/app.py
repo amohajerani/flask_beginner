@@ -58,10 +58,10 @@ def home():
     )
 
 
-@app.route("/public")
-def public():
+@app.route("/base")
+def base():
     return render_template(
-        "public.html")
+        "base.html", session=session)
 
 
 @app.route("/private")
