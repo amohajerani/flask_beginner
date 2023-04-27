@@ -2,7 +2,7 @@
   %}
   <div class="content">
     <div>
-      <h3>Welcome {{username}}! All your files are here</h3>
+      <h6>Welcome {{username}}! All your files are here</h6>
       <table>
         <thead>
           <tr>
@@ -12,6 +12,7 @@
             <th>Delete</th>
             <th>Download</th>
             <th>Link</th>
+            <th>Change privacy</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
               <td><a href="/delete/{{username}}/{{filename}}">Delete</a></td>
               <td><a href="/{{username}}/{{filename}}" download={{filename}}>Download</a></td>
               <td><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Link</button></td>
+              <td><a href="/update-page/{{username}}/{{filename}}">Change privacy</a></td>
             </tr>
           {% endfor %}
         </tbody>
