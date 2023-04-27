@@ -2,26 +2,30 @@
   %}
   <div class="content">
     <div>
-      <h3>Here are media files inside the S3 bucket:</h3>
-      
-      <ul>
-        {% for filename,private in doc_objects.items() %}
-          <li> 
-            {{filename}}
-            {% if private==1 %}
-              <p>Private</p>
-            {% else %}
-              <p>public</p>
-            {% endif %}
-            <a href="/{{username}}/{{filename}}">View</a>
-            <a href="/delete/{{username}}/{{filename}}">Delete</a>
-            <a href="/update-page/{{username}}/{{filename}}">Update privacy</a>
-            <a href="/{{username}}/{{filename}}" download={{filename}}>Download</a>
-            <button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Copy Link</button>
-
-          </li>
-        {% endfor %}
-      </ul>
+      <h3>Welcome {{username}}! All your files are here</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>filename</th>
+            <th>privacy</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for filename, private in doc_objects.items() %}
+            <tr>
+              <td>{{ filename }}</td>
+              <td>{% if private==1 %}
+                Private {% else %} public {% endif %}
+              </tr>
+              <tr><a href="/{{username}}/{{filename}}">View</a></tr>
+              <tr><a href="/delete/{{username}}/{{filename}}">Delete</a></tr>
+              <tr><a href="/{{username}}/{{filename}}" download={{filename}}>Download</a></tr>
+              <tr><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Copy Link</button></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 </div>
   {% endblock %}
