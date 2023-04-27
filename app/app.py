@@ -50,25 +50,17 @@ def require_auth(func):
 
 
 @app.route("/")
+@require_auth
 def home():
-    return render_template(
-        "home.html",
-        session=session.get("user"),
-        pretty=json.dumps(session.get("user"), indent=4),
-    )
+    username = get_username(session['user']['userinfo']['email'])
+    contents = get_file_names(BUCKET, username)
+    return render_template('home.html', contents=contents, username=username)
 
 
 @app.route("/base")
 def base():
     return render_template(
         "base.html", session=session)
-
-
-@app.route("/private")
-@require_auth
-def private():
-    return render_template(
-        "private.html")
 
 
 @app.route("/callback", methods=["GET", "POST"])
@@ -132,14 +124,6 @@ def upload():
         return redirect("/")
 
 
-@app.route("/files")
-@require_auth
-def list_files():
-    username = get_username(session['user']['userinfo']['email'])
-    contents = get_file_names(BUCKET, username)
-    return render_template('collection.html', contents=contents, username=username)
-
-
 @app.route("/<username>/<filename>")
 def get_file(username, filename):
     filepath = username+'/'+filename
@@ -169,7 +153,7 @@ def delete_file(username, filename):
     mongo_delete_doc(filepath)
     # delete from s3
     s3_delete_file(filepath, BUCKET)
-    return redirect('/files')
+    return redirect('/')
 
 
 @app.route("/update-page/<username>/<filename>")
@@ -188,7 +172,7 @@ def update_func(username, filename):
         private = len(request.form.getlist('private'))
         filepath = username+'/'+filename
         mongo_update_file(filepath, {'private': private})
-        return redirect('/files')
+        return redirect('/')
 
 
 if __name__ == "__main__":

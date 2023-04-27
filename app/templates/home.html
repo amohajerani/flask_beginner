@@ -1,16 +1,38 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <title>Auth0 Example</title>
+    <title>Display images</title>
   </head>
   <body>
-    {% if session %}
-    <h1>Welcome {{session.userinfo.name}}!</h1>
-    <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
-    <div><pre>{{pretty}}</pre></div>
-    {% else %}
-    <h1 id="profileDropDown">Welcome Guest</h1>
-    <p><a href="/login" id="qsLoginBtn">Login</a></p>
-    {% endif %}
+    <div class="content">
+        <div>
+          <h3>Here are media files inside the S3 bucket:</h3>
+          
+          <ul>
+            {% for filename in contents %}
+              <li> 
+                {{filename}}
+                <a href="/{{username}}/{{filename}}">View</a>
+                <a href="/delete/{{username}}/{{filename}}">Delete</a>
+                <a href="/update-page/{{username}}/{{filename}}">Update</a>
+                <a href="/{{username}}/{{filename}}" download={{filename}}>Download</a>
+                <button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Copy Link</button>
+
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+    </div>
+    <script>
+      function copyToClipboard(link) {
+        const el = document.createElement('textarea');
+        el.value = link;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert('Link copied to clipboard!');
+      }
+      </script>
   </body>
 </html>
