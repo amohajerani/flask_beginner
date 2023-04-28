@@ -65,11 +65,15 @@ def home():
 
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
-    if request.args.get('state') != session.pop('state', None):
-        return "Error: state parameter mismatch"
-    token = oauth.auth0.authorize_access_token()
-    session["user"] = token
-    return redirect("/")
+    try:
+        token = oauth.auth0.authorize_access_token()
+        session["user"] = token
+        # remove the state parameter from the session
+        session.pop("oauth_state", None)
+        return redirect("/")
+    except Exception as e:
+        # handle any exceptions here
+        return "Error: {}".format(str(e))
 
 
 @app.route("/login")
