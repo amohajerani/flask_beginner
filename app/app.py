@@ -12,6 +12,7 @@ from flask import Flask, redirect, render_template, session, request, Response
 from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
 from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file
 from werkzeug.utils import secure_filename
+import secrets
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -62,14 +63,10 @@ def home():
     return render_template('home.html', doc_objects=doc_objects, username=username)
 
 
-@app.route("/base")
-def base():
-    return render_template(
-        "base.html", session=session)
-
-
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
+    if request.args.get('state') != session.pop('state', None):
+        return "Error: state parameter mismatch"
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     return redirect("/")
@@ -77,8 +74,11 @@ def callback():
 
 @app.route("/login")
 def login():
+    state = secrets.token_urlsafe(16)
+    session['state'] = state
     return oauth.auth0.authorize_redirect(
-        redirect_uri='https://www.thegagali.com/callback'
+        redirect_uri='https://www.thegagali.com/callback',
+        state=state
     )
 
 
