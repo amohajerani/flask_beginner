@@ -4,7 +4,7 @@
 git pull
 if [ "$1" == "nginx" ]; then
     docker build -t nginx-image ./nginx
-else if [ "$1" == "app" ]; then
+elif [ "$1" == "app" ]; then
     docker build -t app-image ./app
 else 
     docker build -t nginx-image ./nginx
