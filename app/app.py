@@ -52,7 +52,7 @@ def require_auth(func):
 @app.route("/")
 def home():
     if not session.get('user'):
-        return render_template('/landing.html')
+        return render_template('landing.html')
     username = get_username(session['user']['userinfo']['email'])
     contents = get_file_names(BUCKET, username)
     doc_objects = {}
