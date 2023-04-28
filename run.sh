@@ -4,7 +4,7 @@
 sudo git pull
 sudo docker stop $(sudo docker ps -a -q)
 sudo docker rm $(sudo docker ps -a -q)
-docker network create mynetwork
+sudo docker network create mynetwork
 sudo docker build -t app ./app
 sudo docker build -t nginx ./nginx
 
