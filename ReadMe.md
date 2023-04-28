@@ -18,3 +18,5 @@ On AWS:
   or if you want load balancing:
 - sudo docker-compose up -d --build --scale app=3
 - none
+
+for setting up clientcredential for google, follow this demo: https://www.youtube.com/watch?v=Z5fjBLbVF2w&ab_channel=Webarchersofficial

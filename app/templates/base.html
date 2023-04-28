@@ -35,7 +35,7 @@
       </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <h3>GAGALI</h3>
       <button
         class="navbar-toggler"
@@ -52,8 +52,7 @@
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           <a class="nav-item nav-link" id="form" href="/form">New file</a>
           {% else %}
-          <a class="nav-item nav-link" id="login" href="/login">Login</a>
-          <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+          <a class="nav-item nav-link" id="login" href="/login">Login or sign up</a>
           {% endif %}
         </div>
       </div>
@@ -106,5 +105,4 @@
   }
 </script>
 {% endblock %}
-  </body>
 </html>
