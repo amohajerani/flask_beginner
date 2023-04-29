@@ -13,6 +13,7 @@ from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_fi
 from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file
 from werkzeug.utils import secure_filename
 import datetime
+import logging
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -25,13 +26,17 @@ app.secret_key = env.get("APP_SECRET_KEY")
 UPLOAD_FOLDER = "uploads"
 BUCKET = "thegagali"
 
+handler = logging.FileHandler('/logs/access.log')
+app.logger.addHandler(handler)
+
 
 @app.before_request
 def log_request_info():
     if request.path == '/<username>/<filename>':
         current_time = datetime.datetime.now()
         ip_address = request.remote_addr
-        print(f'{current_time} - {ip_address}')
+        log_string = f'{current_time} - {ip_address}'
+        app.logger.info(log_string)
 
 
 oauth = OAuth(app)
