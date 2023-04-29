@@ -26,16 +26,17 @@ app.secret_key = env.get("APP_SECRET_KEY")
 UPLOAD_FOLDER = "uploads"
 BUCKET = "thegagali"
 
-handler = logging.FileHandler('./logs/access.log')
+handler = logging.FileHandler('/logs/access.log')
 app.logger.addHandler(handler)
 
 
 @app.before_request
 def log_request_info():
-    if request.path == '/<username>/<filename>':
+    if True:  # request.path == '/<username>/<filename>':
         current_time = datetime.datetime.now()
         ip_address = request.remote_addr
         log_string = f'{current_time} - {ip_address}'
+        print(f'{current_time} - {ip_address}')
         app.logger.info(log_string)
 
 
