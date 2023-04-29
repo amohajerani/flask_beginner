@@ -26,7 +26,7 @@ app.secret_key = env.get("APP_SECRET_KEY")
 UPLOAD_FOLDER = "uploads"
 BUCKET = "thegagali"
 
-handler = logging.FileHandler('/logs/access.log')
+handler = logging.FileHandler('./logs/access.log')
 app.logger.addHandler(handler)
 
 
