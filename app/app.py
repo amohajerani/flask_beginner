@@ -8,7 +8,7 @@ from urllib.parse import quote_plus, urlencode
 import os
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, request, Response
+from flask import Flask, redirect, render_template, session, request, Response, url_for
 from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
 from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file
 from werkzeug.utils import secure_filename
@@ -71,9 +71,8 @@ def callback():
 
 @app.route("/login")
 def login():
-    return oauth.auth0.authorize_redirect(
-        redirect_uri='https://www.thegagali.com/callback'
-    )
+    redirect_uri = url_for("callback", _external=True)
+    return oauth.auth0.authorize_redirect(redirect_uri=redirect_uri)
 
 
 @app.route("/logout")
