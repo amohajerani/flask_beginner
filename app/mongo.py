@@ -31,6 +31,7 @@ client = MongoClient(MONGO_URL)
 db = client.thegagali
 Users = db.Users
 Files = db.files
+Events = db.Events
 
 
 def create_username(email):
@@ -81,3 +82,7 @@ def mongo_update_file(filepath, update_obj):
     file_obj = Files.find_one(filter)
     newvalues = {"$set": update_obj}
     Files.update_one(filter, newvalues)
+
+
+def insert_event(event):
+    Events.insert_one(event)

@@ -10,10 +10,9 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, request, Response, url_for
 from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
-from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file
+from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file, insert_event
 from werkzeug.utils import secure_filename
 import datetime
-import logging
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -25,9 +24,6 @@ app.secret_key = env.get("APP_SECRET_KEY")
 
 UPLOAD_FOLDER = "uploads"
 BUCKET = "thegagali"
-
-handler = logging.FileHandler('/logs/access.log')
-app.logger.addHandler(handler)
 
 oauth = OAuth(app)
 
@@ -133,7 +129,8 @@ def get_file(username, filename):
     event = {'username': username, 'filename': filename,
              'ip_address': ip_address, 'time': current_time}
     print(event, flush=True)
-    app.logger.info(event)
+    # add the event to the table
+    insert_event(event)
 
     # get the private attribute of the object
     file_doc = get_file_doc(filepath)
