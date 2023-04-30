@@ -14,7 +14,7 @@
             <tbody>
               {% for event in events %}
                 <tr>
-                  <td> ET</td>
+                  <td>{{ event.time }} ET</td>
                   <td>{{ event.ip_address }}</td>
                 </tr>
               {% endfor %}
