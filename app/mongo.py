@@ -93,17 +93,18 @@ def get_events(filepath):
     events = events[:100]
 
     # get the location fields
-    ip_addresses = set([event['ip_address'] for event in events])
+    ip_addresses = list(set([event['ip_address'] for event in events]))
     ip = {}
+
     for ip_address in ip_addresses:
         ip[ip_address] = requests.get(
             f'https://ipapi.co/{ip_address}/json/').json()
 
     for i in range(len(events)):
         ip_address = events[i]['ip_address']
-        events[i]['city'] = ip[ip_address]['city']
-        events[i]['region'] = ip[ip_address]['region']
-        events[i]['country'] = ip[ip_address]['country']
+        events[i]['city'] = ip[ip_address].get('city', 'NA')
+        events[i]['region'] = ip[ip_address].get('region', 'NA')
+        events[i]['country'] = ip[ip_address].get('country', 'NA')
 
     return events
 
