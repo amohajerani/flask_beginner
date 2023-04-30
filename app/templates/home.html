@@ -13,6 +13,7 @@
             <th>Download</th>
             <th>Link</th>
             <th>Change privacy</th>
+            <th>Traffic log</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
               <td><a href="/{{username}}/{{filename}}" download={{filename}}>Download</a></td>
               <td><button onclick="copyToClipboard('https://www.thegagali.com/{{username}}/{{filename}}')">Link</button></td>
               <td><a href="/update-page/{{username}}/{{filename}}">Change privacy</a></td>
+              <td><a href="/logs/{{username}}/{{filename}}">See the log</a></td>
             </tr>
           {% endfor %}
         </tbody>

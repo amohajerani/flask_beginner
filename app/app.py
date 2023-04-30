@@ -10,7 +10,7 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, request, Response, url_for
 from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_file
-from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file, insert_event
+from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file, insert_event, get_events
 from werkzeug.utils import secure_filename
 import datetime
 
@@ -161,7 +161,7 @@ def delete_file(username, filename):
 
 
 @app.route("/update-page/<username>/<filename>")
-# @require_auth
+@require_auth
 def update_page(username, filename):
     filepath = username+'/'+filename
     file_doc = get_file_doc(filepath)
@@ -170,13 +170,21 @@ def update_page(username, filename):
 
 
 @app.route("/update-func/<username>/<filename>", methods=['POST'])
-# @require_auth
+@require_auth
 def update_func(username, filename):
     if request.method == "POST":
         private = len(request.form.getlist('private'))
         filepath = username+'/'+filename
         mongo_update_file(filepath, {'private': private})
         return redirect('/')
+
+
+@app.route("/logs/<username>/<filename>")
+@require_auth
+def show_logs(username, filename):
+    filepath = username+'/'+filename
+    events = get_events(filepath)
+    return render_template('update-page.html', filename=filename, username=username, events=events)
 
 
 if __name__ == "__main__":

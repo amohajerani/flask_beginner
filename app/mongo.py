@@ -84,5 +84,11 @@ def mongo_update_file(filepath, update_obj):
     Files.update_one(filter, newvalues)
 
 
+def get_events(filepath):
+    events = list(Events.find({filepath: filepath}))
+    sorted(events, key=lambda k: k['time'], reverse=True)
+    return events[:100]
+
+
 def insert_event(event):
     Events.insert_one(event)
