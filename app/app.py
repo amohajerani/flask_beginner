@@ -126,7 +126,7 @@ def get_file(username, filename):
     filepath = username+'/'+filename
     current_time = datetime.datetime.now()
     ip_address = request.remote_addr
-    event = {'username': username, 'filename': filename,
+    event = {'filepath': filepath,
              'ip_address': ip_address, 'time': current_time}
     print(event, flush=True)
     # add the event to the table
