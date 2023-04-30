@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}View logs{% endblock %} {% block content
+    %}
+    <div class="content">
+        <div>
+          <h6>Here are the latest views of {{filename}}</h6>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>IP address</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for event in events %}
+                <tr>
+                  <td>{{ event.time }}</td>
+                  <td>{{ event.ip_address }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+    {% endblock %}
