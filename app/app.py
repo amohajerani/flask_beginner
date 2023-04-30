@@ -62,7 +62,7 @@ def home():
     doc_objects = {}
     for content in contents:
         doc_objects[content] = get_file_doc(username+'/'+content)['private']
-    print('doc object: ', doc_objects)
+    print('doc object: ', doc_objects, flush=True)
     return render_template('home.html', doc_objects=doc_objects, username=username)
 
 
