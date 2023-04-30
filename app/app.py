@@ -29,17 +29,6 @@ BUCKET = "thegagali"
 handler = logging.FileHandler('/logs/access.log')
 app.logger.addHandler(handler)
 
-
-@app.before_request
-def log_request_info():
-    if True:  # request.path == '/<username>/<filename>':
-        current_time = datetime.datetime.now()
-        ip_address = request.remote_addr
-        log_string = f'{current_time} - {ip_address}'
-        print(f'{current_time} - {ip_address}')
-        app.logger.info(log_string)
-
-
 oauth = OAuth(app)
 
 oauth.register(
@@ -140,6 +129,11 @@ def upload():
 @app.route("/<username>/<filename>")
 def get_file(username, filename):
     filepath = username+'/'+filename
+    current_time = datetime.datetime.now()
+    ip_address = request.remote_addr
+    log_string = f'{current_time} - {ip_address}'
+    print(f'{current_time} - {ip_address}')
+    app.logger.info(log_string)
 
     # get the private attribute of the object
     file_doc = get_file_doc(filepath)
