@@ -21,7 +21,7 @@ Files collection
 from pymongo.mongo_client import MongoClient
 from dotenv import find_dotenv, load_dotenv
 from os import environ as env
-
+import requests
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -90,7 +90,22 @@ def get_events(filepath):
         events[i]['time'] = events[i]['time'].strftime("%Y-%m-%d %H:%M:%S")
 
     sorted(events, key=lambda k: k['time'], reverse=True)
-    return events[:100]
+    events = events[:100]
+
+    # get the location fields
+    ip_addresses = set([event['ip_address'] for event in events])
+    ip = {}
+    for ip_address in ip_addresses:
+        ip[ip_address] = requests.get(
+            f'https://ipapi.co/{ip_address}/json/').json()
+
+    for i in range(len(events)):
+        ip_address = events[i]['ip_address']
+        events[i]['city'] = ip[ip_address]['city']
+        events[i]['region'] = ip[ip_address]['region']
+        events[i]['country'] = ip[ip_address]['country']
+
+    return events
 
 
 def insert_event(event):

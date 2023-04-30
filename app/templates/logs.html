@@ -8,6 +8,9 @@
               <tr>
                 <th>Time</th>
                 <th>IP address</th>
+                <th>City</th>
+                <th>Region</th>
+                <th>Country</th>
               </tr>
             </thead>
             <tbody>
@@ -15,6 +18,9 @@
                 <tr>
                   <td>{{ event.time }} UTC</td>
                   <td>{{ event.ip_address }}</td>
+                  <td>{{ event.city }}</td>
+                  <td>{{ event.region }}</td>
+                  <td>{{ event.country }}</td>
                 </tr>
               {% endfor %}
             </tbody>
