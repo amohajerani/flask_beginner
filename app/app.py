@@ -130,10 +130,8 @@ def get_file(username, filename):
     ip_address = request.remote_addr
     event = {'filepath': filepath,
              'ip_address': ip_address, 'time': current_time}
-    print(event, flush=True)
     # add the event to the table
     insert_event(event)
-
     # get the private attribute of the object
     file_doc = get_file_doc(filepath)
 
@@ -187,7 +185,7 @@ def show_logs(username, filename):
     filepath = username+'/'+filename
     events = get_events(filepath)
     print('events: ', events, flush=True)
-    return render_template('logs.html', filename=filename, username=username, events=events)
+    return render_template('logs.html', filename=filename, events=events)
 
 
 if __name__ == "__main__":

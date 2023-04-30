@@ -86,7 +86,7 @@ def mongo_update_file(filepath, update_obj):
 
 def get_events(filepath):
     events = list(Events.find({'filepath': filepath}))
-    for i, event in enumerate(events):
+    for i in range(len(events)):
         events[i]['time'] = events[i]['time'].strftime("%Y-%m-%d %H:%M:%S")
 
     sorted(events, key=lambda k: k['time'], reverse=True)
