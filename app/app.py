@@ -184,7 +184,7 @@ def update_func(username, filename):
 def show_logs(username, filename):
     filepath = username+'/'+filename
     events = get_events(filepath)
-    return render_template('update-page.html', filename=filename, username=username, events=events)
+    return render_template('logs.html', filename=filename, username=username, events=events)
 
 
 if __name__ == "__main__":
