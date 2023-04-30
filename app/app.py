@@ -62,7 +62,6 @@ def home():
     doc_objects = {}
     for content in contents:
         doc_objects[content] = get_file_doc(username+'/'+content)['private']
-    print('doc object: ', doc_objects, flush=True)
     return render_template('home.html', doc_objects=doc_objects, username=username)
 
 
@@ -131,9 +130,10 @@ def get_file(username, filename):
     filepath = username+'/'+filename
     current_time = datetime.datetime.now()
     ip_address = request.remote_addr
-    log_string = f'{current_time} - {ip_address}'
-    print(f'{current_time} - {ip_address}')
-    app.logger.info(log_string)
+    event = {'username': username, 'filename': filename,
+             'ip_address': ip_address, 'time': current_time}
+    print(event, flush=True)
+    app.logger.info(event)
 
     # get the private attribute of the object
     file_doc = get_file_doc(filepath)
