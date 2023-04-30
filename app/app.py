@@ -13,6 +13,8 @@ from s3_functions import upload_file, get_file_names, get_file_obj, s3_delete_fi
 from mongo import get_username, insert_file_doc, file_exists, get_file_doc, mongo_delete_doc, mongo_update_file, insert_event, get_events
 from werkzeug.utils import secure_filename
 import datetime
+import pytz
+
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -124,7 +126,7 @@ def upload():
 @app.route("/<username>/<filename>")
 def get_file(username, filename):
     filepath = username+'/'+filename
-    current_time = datetime.datetime.now()
+    current_time = datetime.datetime.now(pytz.timezone('US/Eastern'))
     ip_address = request.remote_addr
     event = {'filepath': filepath,
              'ip_address': ip_address, 'time': current_time}
